@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace BankOcr.UnitTests.Services
 {
-    public class DigitParserServiceTests
+    public class DigitParserServiceTests : BaseUnitTest<DigitParserService>
     {
         [TestCase(" _ " +
                   "| |" +
@@ -37,10 +37,9 @@ namespace BankOcr.UnitTests.Services
                   "|_|" +
                   " _|", ExpectedResult = 9)]
 
-        public int? ParseDigit_simpleValues_Parsed(string digit)
+        public int? ParseDigit_SimpleValues_Parsed(string digit)
         {
-            var sut = new DigitParserService();
-            return sut.ParseDigit(digit);
+            return Sut.ParseDigit(digit);
         }
     }
 }

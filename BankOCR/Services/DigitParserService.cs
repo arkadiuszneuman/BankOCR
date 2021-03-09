@@ -1,6 +1,11 @@
 ﻿namespace BankOCR.Services
 {
-    public class DigitParserService
+    public interface IDigitParserService
+    {
+        int? ParseDigit(string lines);
+    }
+
+    public class DigitParserService : IDigitParserService
     {
         public int? ParseDigit(string lines)
         {
