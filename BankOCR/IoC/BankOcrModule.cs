@@ -7,7 +7,7 @@ namespace BankOCR.IoC
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ParserService>()
+            builder.RegisterType<DigitParserService>()
                 .AsSelf();
         }
     }

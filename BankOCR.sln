@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankOCR", "BankOCR\BankOCR.csproj", "{282D3AE4-0B7F-41AB-B88C-4F51AB870C7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankOcr.UnitTests", "BankOcr.UnitTests\BankOcr.UnitTests.csproj", "{B882DD70-497E-40A1-8AE5-B011B5243BFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{282D3AE4-0B7F-41AB-B88C-4F51AB870C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{282D3AE4-0B7F-41AB-B88C-4F51AB870C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{282D3AE4-0B7F-41AB-B88C-4F51AB870C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B882DD70-497E-40A1-8AE5-B011B5243BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B882DD70-497E-40A1-8AE5-B011B5243BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B882DD70-497E-40A1-8AE5-B011B5243BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B882DD70-497E-40A1-8AE5-B011B5243BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
