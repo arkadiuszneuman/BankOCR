@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using BankOCR.Services;
+using BankOcr.UnitTests.TestsData;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -20,7 +21,7 @@ namespace BankOcr.UnitTests.Services
                 .ReturnsForAnyArgs(1)
                 .AndDoes(x => receivedDigits.Add(x.Arg<string>()));
             
-            var data = await File.ReadAllTextAsync(Path.Join(Directory.GetCurrentDirectory(), "TestsData", "0123456789.txt"));
+            var data = await TestDataLoader.LoadTestData("0123456789");
             
             var result = Sut.ParseNumber(data);
 
