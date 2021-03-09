@@ -36,6 +36,9 @@ namespace BankOcr.UnitTests.Services
         [TestCase(" _ " +
                   "|_|" +
                   " _|", ExpectedResult = 9)]
+        [TestCase(" _ " +
+                  "|_|" +
+                  " _ ", ExpectedResult = null)]
 
         public int? ParseDigit_SimpleValues_Parsed(string digit)
         {
