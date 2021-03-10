@@ -2,7 +2,7 @@
 
 namespace BankOCR.Services
 {
-    public class AccountValidator
+    public class AccountValidatorService
     {
         public bool IsAccountValid(string accountNumber)
         {

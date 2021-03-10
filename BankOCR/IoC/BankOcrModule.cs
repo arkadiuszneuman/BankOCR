@@ -13,7 +13,7 @@ namespace BankOCR.IoC
             builder.RegisterType<NumberParserService>()
                 .AsSelf();
 
-            builder.RegisterType<AccountValidator>()
+            builder.RegisterType<AccountValidatorService>()
                 .AsSelf();
         }
     }

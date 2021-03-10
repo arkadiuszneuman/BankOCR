@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace BankOcr.UnitTests.Services
 {
-    public class AccountValidatorTests : BaseUnitTest<AccountValidator>
+    public class AccountValidatorTests : BaseUnitTest<AccountValidatorService>
     {
         [TestCase("457508000", ExpectedResult = true)]
         [TestCase("457508?00", ExpectedResult = false)]
