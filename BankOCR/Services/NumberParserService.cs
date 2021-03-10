@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BankOCR.Domain.ValueObjects;
+using BankOCR.Extensions;
 
 namespace BankOCR.Services
 {
@@ -13,9 +15,9 @@ namespace BankOCR.Services
             _digitParserService = digitParserService;
         }
 
-        public string ParseNumber(string number)
+        public string ParseNumber(DigitalNumber digitalNumber)
         {
-            var lines = CreateLines(number);
+            var lines = digitalNumber.Number.SplitByNewLine();
             var digits = GroupByDigits(lines).ToList();
 
             var sb = new StringBuilder();
@@ -40,10 +42,5 @@ namespace BankOCR.Services
                 yield return sb.ToString();
             }
         }
-
-        private static string[] CreateLines(string number) =>
-            number.Split("\n")
-                .Select(x => x.Trim('\r'))
-                .ToArray();
     }
 }

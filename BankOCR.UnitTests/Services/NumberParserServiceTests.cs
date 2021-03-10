@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using BankOCR.Domain.ValueObjects;
 using BankOCR.Services;
 using BankOcr.UnitTests.TestsData;
 using FluentAssertions;
@@ -23,7 +24,7 @@ namespace BankOcr.UnitTests.Services
             
             var data = await TestDataLoader.LoadTestData("0123456789");
             
-            var result = Sut.ParseNumber(data);
+            var result = Sut.ParseNumber(DigitalNumber.Create(data));
 
             receivedDigits.Should().ContainInOrder(
                 " _ " +
