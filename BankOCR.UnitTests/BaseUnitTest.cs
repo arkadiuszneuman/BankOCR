@@ -11,7 +11,7 @@ namespace BankOcr.UnitTests
     public abstract class BaseUnitTest<TSut> : BaseUnitTest
         where TSut : class
     {
-        private readonly NSubstituteAutoMocker.NSubstituteAutoMocker<TSut> _mocker = new();
+        private readonly NSubstituteAutoMocker.Standard.NSubstituteAutoMocker<TSut> _mocker = new();
 
         public virtual TSut Sut => _mocker.ClassUnderTest;
 
