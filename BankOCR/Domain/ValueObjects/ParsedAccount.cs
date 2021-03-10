@@ -16,8 +16,12 @@ namespace BankOCR.Domain.ValueObjects
 
         public static ParsedAccount Create(DigitalNumber digitalNumber, string accountNumber)
         {
-            if (accountNumber.Any(x => !char.IsDigit(x) || x != '?'))
+            if (accountNumber
+                .Where(x => !char.IsDigit(x))
+                .Any(x => x != '?'))
+            {
                 throw new ParsedAccountNumberShouldHaveOnlyDigitsOrQuestionMarkException(accountNumber);
+            }
 
             return new ParsedAccount(digitalNumber, accountNumber);
         }

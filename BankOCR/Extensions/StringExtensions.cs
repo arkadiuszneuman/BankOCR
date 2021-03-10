@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace BankOCR.Extensions
 {
@@ -6,7 +7,7 @@ namespace BankOCR.Extensions
     {
         public static string[] SplitByNewLine(this string stringToSplit) =>
             stringToSplit
-                .Split("\n")
+                .Split("\n", StringSplitOptions.RemoveEmptyEntries)
                 .Select(x => x.Trim('\r'))
                 .ToArray();
     }
