@@ -1,22 +1,33 @@
-﻿namespace BankOCR.Domain.ValueObjects
+﻿using BankOCR.Exceptions;
+
+namespace BankOCR.Domain.ValueObjects
 {
-    public enum AccountValidationResult
+    public enum ParsedAccountStatus
     {
-        InvalidAccountLenght,
+        None,
         ChecksumError,
-        IllegalCharacter,
-        Success
+        IllegalCharacter
     }
     
     public class ValidatedAccount : ValueObject
     {
         public ParsedAccount ParsedAccount { get; }
-        public AccountValidationResult AccountValidationResult { get; }
+        public ParsedAccountStatus AccountValidationResult { get; }
         
-        public ValidatedAccount(ParsedAccount parsedAccount, AccountValidationResult accountValidationResult)
+        public ValidatedAccount(ParsedAccount parsedAccount, ParsedAccountStatus accountValidationResult = ParsedAccountStatus.None)
         {
             ParsedAccount = parsedAccount;
             AccountValidationResult = accountValidationResult;
         }
+
+        public override string ToString() => $"{ParsedAccount.Number}{GetStatus(AccountValidationResult)}";
+
+        private string GetStatus(ParsedAccountStatus accountValidationResult) =>
+            accountValidationResult switch
+            {
+                ParsedAccountStatus.ChecksumError => " ERR",
+                ParsedAccountStatus.IllegalCharacter => " ILL",
+                _ => string.Empty
+            };
     }
 }
