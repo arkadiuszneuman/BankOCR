@@ -12,7 +12,7 @@ namespace BankOcr.UnitTests.Domain.ValueObjects
         [TestCase("1")]
         [TestCase("123")]
         [TestCase("1?3")]
-        public async Task Create_SimpleValues_CreatesNewInstance(string accountNumber)
+        public void Create_SimpleValues_CreatesNewInstance(string accountNumber)
         {
             var digitalNumber = DigitalNumber.Create(" _ \r\n" +
                                                      "| |\r\n" +
@@ -25,7 +25,7 @@ namespace BankOcr.UnitTests.Domain.ValueObjects
         
         [TestCase("a")]
         [TestCase("1a3")]
-        public async Task Create_InvalidValues_ThrowsException(string accountNumber)
+        public void Create_InvalidValues_ThrowsException(string accountNumber)
         {
             Action result = () => ParsedAccount.Create(DigitalNumber.Create(" _ \r\n" +
                                                                             "| |\r\n" +
