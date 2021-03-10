@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using BankOCR.Domain.ValueObjects;
 using BankOCR.Services;
@@ -21,9 +20,9 @@ namespace BankOcr.UnitTests.Services
                 .ParseDigit(default)
                 .ReturnsForAnyArgs(1)
                 .AndDoes(x => receivedDigits.Add(x.Arg<string>()));
-            
+
             var data = await TestDataLoader.LoadTestData("0123456789");
-            
+
             var result = Sut.ParseNumber(DigitalNumber.Create(data));
 
             receivedDigits.Should().ContainInOrder(
@@ -35,30 +34,31 @@ namespace BankOcr.UnitTests.Services
                 "  |",
                 " _ " +
                 " _|" +
-                "|_ ", 
+                "|_ ",
                 " _ " +
                 " _|" +
-                " _|", 
+                " _|",
                 "   " +
                 "|_|" +
-                "  |", 
+                "  |",
                 " _ " +
                 "|_ " +
-                " _|", 
+                " _|",
                 " _ " +
                 "|_ " +
-                "|_|", 
+                "|_|",
                 " _ " +
                 "  |" +
-                "  |", 
+                "  |",
                 " _ " +
                 "|_|" +
-                "|_|", 
+                "|_|",
                 " _ " +
                 "|_|" +
                 " _|");
 
-            result.Should().Be("1111111111");
+            result.Number.Should().Be("1111111111");
+            result.DigitalNumber.Number.Should().Be(data);
         }
     }
 }

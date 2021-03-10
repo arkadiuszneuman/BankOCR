@@ -15,15 +15,22 @@ namespace BankOCR.Services
             _digitParserService = digitParserService;
         }
 
-        public string ParseNumber(DigitalNumber digitalNumber)
+        public ParsedAccount ParseNumber(DigitalNumber digitalNumber)
         {
             var lines = digitalNumber.Number.SplitByNewLine();
             var digits = GroupByDigits(lines).ToList();
 
+            var accountNumber = ParseAccountNumber(digits);
+
+            return ParsedAccount.Create(digitalNumber, accountNumber);
+        }
+
+        private string ParseAccountNumber(List<string> digits)
+        {
             var sb = new StringBuilder();
             foreach (var digit in digits)
             {
-                sb.Append(_digitParserService.ParseDigit(digit));
+                sb.Append(_digitParserService.ParseDigit(digit) ?? '?');
             }
 
             return sb.ToString();
