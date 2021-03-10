@@ -24,7 +24,7 @@ namespace BankOCR.Domain.ValueObjects
                 throw new DigitalNumberDoesNotHaveSameLenghtForEveryLineException(digitalAccountNumber);
 
             if (splittedNumber[0].Length % 3 != 0)
-                throw new DigitalNumberLenghtIsNotDivisibleBy3(digitalAccountNumber);
+                throw new DigitalNumberLenghtIsNotDivisibleBy3Exception(digitalAccountNumber);
 
             return new DigitalNumber(digitalAccountNumber);
         }

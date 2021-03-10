@@ -44,7 +44,7 @@ namespace BankOcr.UnitTests.Domain.ValueObjects
             
             Action result = () => DigitalNumber.Create(testData);
 
-            result.Should().ThrowExactly<DigitalNumberLenghtIsNotDivisibleBy3>()
+            result.Should().ThrowExactly<DigitalNumberLenghtIsNotDivisibleBy3Exception>()
                 .And.DigitalNumber.Should().Be(testData);
         }
         
