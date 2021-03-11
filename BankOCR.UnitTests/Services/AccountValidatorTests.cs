@@ -12,16 +12,16 @@ namespace BankOcr.UnitTests.Services
         [TestCase("457508000", ExpectedResult = ParsedAccountStatus.None)]
         [TestCase("457508001", ExpectedResult = ParsedAccountStatus.ChecksumError)]
         [TestCase("457508?00", ExpectedResult = ParsedAccountStatus.IllegalCharacter)]
-        public ParsedAccountStatus ValidateParsedAccount_AccountNumber_CheckIsValid(string accountNumber)
+        public ParsedAccountStatus ValidateAccountNumber_AccountNumber_CheckIsValid(string accountNumber)
         {
-            return Sut.ValidateParsedAccount(accountNumber).AccountValidationResult;
+            return Sut.ValidateAccountNumber(accountNumber).AccountValidationResult;
         }
         
         [TestCase("01234567")]
         [TestCase("0123456789")]
-        public void ValidateParsedAccount_InvalidAccountNumberLength_CheckIsValid(string accountNumber)
+        public void ValidateAccountNumber_InvalidAccountNumberLength_CheckIsValid(string accountNumber)
         {
-            Action result = () => Sut.ValidateParsedAccount(accountNumber);
+            Action result = () => Sut.ValidateAccountNumber(accountNumber);
 
             result.Should().ThrowExactly<InvalidLengthOfAccountException>();
         }

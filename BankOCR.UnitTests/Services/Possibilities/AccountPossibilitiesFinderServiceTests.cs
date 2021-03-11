@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BankOCR.Domain.ValueObjects;
+using BankOCR.Extensions;
 using BankOCR.Services;
 using BankOCR.Services.Possibilities;
 using BankOcr.UnitTests.TestsData;
@@ -14,18 +15,14 @@ namespace BankOcr.UnitTests.Services.Possibilities
         [Test]
         public async Task FindPossibilities_AccountNumber88888888_Found4Possibilities()
         {
-            var data = await TestDataLoader.LoadTestData("888888888");
+            var data = (await TestDataLoader.LoadTestData("888888888")).SplitByNewLine();
 
             var sut = new AccountPossibilitiesFinderService(new SignPossibilitiesFinder(new DigitParserService()), new AccountValidatorService());
             var parsedAccount = ParsedAccount.Create(DigitalNumber.Create(data), "888888888");
 
-            var possibilities = sut.FindPossibilities(parsedAccount).ToList();
+            var possibilities = sut.FindPossibilities(parsedAccount);
 
-            possibilities.Should().BeEquivalentTo(
-                new ValidatedAccount("888886888"),
-                new ValidatedAccount("888888880"),
-                new ValidatedAccount("888888988")
-            );
+            possibilities.Possibilities.Should().BeEquivalentTo("888886888", "888888880", "888888988");
         }
     }
 }

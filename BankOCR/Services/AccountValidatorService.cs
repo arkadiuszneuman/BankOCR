@@ -5,12 +5,12 @@ namespace BankOCR.Services
 {
     public interface IAccountValidatorService
     {
-        ValidatedAccount ValidateParsedAccount(string accountNumber);
+        ValidatedAccount ValidateAccountNumber(string accountNumber);
     }
 
     public class AccountValidatorService : IAccountValidatorService
     {
-        public ValidatedAccount ValidateParsedAccount(string accountNumber) =>
+        public ValidatedAccount ValidateAccountNumber(string accountNumber) =>
             new(accountNumber, IsAccountValid(accountNumber));
 
         private ParsedAccountStatus IsAccountValid(string accountNumber)

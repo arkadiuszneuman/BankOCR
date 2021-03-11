@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BankOCR.Domain.ValueObjects;
+using BankOCR.Extensions;
 using BankOCR.Services;
 using BankOcr.UnitTests.TestsData;
 using FluentAssertions;
@@ -21,7 +22,7 @@ namespace BankOcr.UnitTests.Services
                 .ReturnsForAnyArgs(1)
                 .AndDoes(x => receivedDigits.Add(x.Arg<string>()));
 
-            var data = await TestDataLoader.LoadTestData("0123456789");
+            var data = (await TestDataLoader.LoadTestData("0123456789")).SplitByNewLine();
 
             var result = Sut.ParseNumber(DigitalNumber.Create(data));
 
@@ -58,7 +59,7 @@ namespace BankOcr.UnitTests.Services
                 " _|");
 
             result.Number.Should().Be("1111111111");
-            result.DigitalNumber.Number.Should().Be(data);
+            result.DigitalNumber.Number.Should().BeEquivalentTo(data);
         }
     }
 }

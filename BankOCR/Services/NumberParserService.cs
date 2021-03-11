@@ -4,7 +4,12 @@ using BankOCR.Domain.ValueObjects;
 
 namespace BankOCR.Services
 {
-    public class NumberParserService
+    public interface INumberParserService
+    {
+        ParsedAccount ParseNumber(DigitalNumber digitalNumber);
+    }
+
+    public class NumberParserService : INumberParserService
     {
         private readonly IDigitParserService _digitParserService;
 

@@ -8,30 +8,28 @@ namespace BankOCR.Domain.ValueObjects
 {
     public class DigitalNumber : ValueObject
     {
-        public string Number { get; }
+        public string[] Number { get; }
         public string[] Digits { get; }
 
-        private DigitalNumber(string accountNumber, string[] digits)
+        private DigitalNumber(string[] accountNumber, string[] digits)
         {
             Number = accountNumber;
             Digits = digits;
         }
 
-        public static DigitalNumber Create(string digitalAccountNumber)
+        public static DigitalNumber Create(string[] splittedNumber)
         {
-            var splittedNumber = digitalAccountNumber.SplitByNewLine();
-
             if (splittedNumber.Length != 3)
-                throw new DigitalNumberDoesNotHave3LinesException(digitalAccountNumber);
+                throw new DigitalNumberDoesNotHave3LinesException(splittedNumber);
 
             if (splittedNumber[0].Length != splittedNumber[1].Length ||
                 splittedNumber[0].Length != splittedNumber[2].Length)
-                throw new DigitalNumberDoesNotHaveSameLenghtForEveryLineException(digitalAccountNumber);
+                throw new DigitalNumberDoesNotHaveSameLenghtForEveryLineException(splittedNumber);
 
             if (splittedNumber[0].Length % 3 != 0)
-                throw new DigitalNumberLenghtIsNotDivisibleBy3Exception(digitalAccountNumber);
+                throw new DigitalNumberLenghtIsNotDivisibleBy3Exception(splittedNumber);
 
-            return new DigitalNumber(digitalAccountNumber, GroupByDigits(splittedNumber).ToArray());
+            return new DigitalNumber(splittedNumber, GroupByDigits(splittedNumber).ToArray());
         }
         
         private static IEnumerable<string> GroupByDigits(string[] lines)

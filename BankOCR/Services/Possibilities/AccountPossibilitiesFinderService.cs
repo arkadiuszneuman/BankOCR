@@ -4,7 +4,12 @@ using BankOCR.Domain.ValueObjects;
 
 namespace BankOCR.Services.Possibilities
 {
-    public class AccountPossibilitiesFinderService
+    public interface IAccountPossibilitiesFinderService
+    {
+        OcrAccount FindPossibilities(ParsedAccount parsedAccount);
+    }
+
+    public class AccountPossibilitiesFinderService : IAccountPossibilitiesFinderService
     {
         private readonly ISignPossibilitiesFinder _signPossibilitiesFinder;
         private readonly IAccountValidatorService _accountValidatorService;
@@ -16,25 +21,25 @@ namespace BankOCR.Services.Possibilities
             _accountValidatorService = accountValidatorService;
         }
 
-        public IEnumerable<ValidatedAccount> FindPossibilities(ParsedAccount parsedAccount)
+        public OcrAccount FindPossibilities(ParsedAccount parsedAccount)
         {
-            var foundPossibilities = new HashSet<ValidatedAccount>();
-
-            var validatedParsedAccount = _accountValidatorService.ValidateParsedAccount(parsedAccount.Number);
+            var validatedParsedAccount = _accountValidatorService.ValidateAccountNumber(parsedAccount.Number);
             if (validatedParsedAccount.AccountValidationResult == ParsedAccountStatus.None)
-                foundPossibilities.Add(validatedParsedAccount);
+                return OcrAccount.Create(validatedParsedAccount);
 
             var possibleDigits = GetAllPossibilitiesOfEveryDigitalNumber(parsedAccount).ToArray();
             var possibleAccountNumbers = CreatePossibleAccountNumbers(parsedAccount.Number, possibleDigits).ToList();
 
+            var foundPossibilities = new HashSet<string>();
+            
             foreach (var possibleAccountNumber in possibleAccountNumbers)
             {
-                var validatedAccount = _accountValidatorService.ValidateParsedAccount(possibleAccountNumber);
+                var validatedAccount = _accountValidatorService.ValidateAccountNumber(possibleAccountNumber);
                 if (validatedAccount.AccountValidationResult == ParsedAccountStatus.None)
-                    foundPossibilities.Add(validatedAccount);
+                    foundPossibilities.Add(validatedAccount.AccountNumber);
             }
 
-            return foundPossibilities;
+            return OcrAccount.Create(validatedParsedAccount, foundPossibilities.ToList());
         }
 
         private IEnumerable<IReadOnlyList<char>> GetAllPossibilitiesOfEveryDigitalNumber(ParsedAccount parsedAccount)
