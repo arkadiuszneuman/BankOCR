@@ -18,7 +18,13 @@ namespace BankOCR.Repositories
         public Task<string> LoadAccountsScan(string filePath, CancellationToken cancellationToken) =>
             File.ReadAllTextAsync(filePath, cancellationToken);
 
-        public Task SaveAccountsToFile(string filePath, IEnumerable<OcrAccount> ocrAccounts, CancellationToken cancellationToken) =>
-            File.WriteAllTextAsync(filePath, string.Join(Environment.NewLine, ocrAccounts), cancellationToken);
+        public async Task SaveAccountsToFile(string filePath, IEnumerable<OcrAccount> ocrAccounts, CancellationToken cancellationToken)
+        {
+            var dirPath = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(dirPath) && !Directory.Exists(dirPath))
+                Directory.CreateDirectory(dirPath);
+            
+            await File.WriteAllTextAsync(filePath, string.Join(Environment.NewLine, ocrAccounts), cancellationToken);
+        }
     }
 }
