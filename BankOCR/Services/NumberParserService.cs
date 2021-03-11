@@ -30,7 +30,11 @@ namespace BankOCR.Services
             var sb = new StringBuilder();
             foreach (var digit in digits)
             {
-                sb.Append(_digitParserService.ParseDigit(digit) ?? '?');
+                var parsedDigit = _digitParserService.ParseDigit(digit);
+                if (parsedDigit == null)
+                    sb.Append("?");
+                else
+                    sb.Append(parsedDigit.Value);
             }
 
             return sb.ToString();

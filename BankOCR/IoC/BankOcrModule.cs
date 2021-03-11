@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using BankOCR.Repositories;
 using BankOCR.Services;
+using BankOCR.Services.Possibilities;
 
 namespace BankOCR.IoC
 {
@@ -7,14 +9,26 @@ namespace BankOCR.IoC
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<OcrService>()
+                .AsSelf();
+            
             builder.RegisterType<DigitParserService>()
                 .As<IDigitParserService>();
 
             builder.RegisterType<NumberParserService>()
-                .AsSelf();
+                .As<INumberParserService>();
 
             builder.RegisterType<AccountValidatorService>()
-                .AsSelf();
+                .As<IAccountValidatorService>();
+            
+            builder.RegisterType<AccountPossibilitiesFinderService>()
+                .As<IAccountPossibilitiesFinderService>();
+            
+            builder.RegisterType<SignPossibilitiesFinder>()
+                .As<ISignPossibilitiesFinder>();
+            
+            builder.RegisterType<AccountsFileRepository>()
+                .As<IAccountsFileRepository>();
         }
     }
 }

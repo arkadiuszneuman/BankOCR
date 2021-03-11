@@ -10,4 +10,10 @@
     <PackageReference Include="Autofac" Version="6.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="default-data.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using BankOCR.Domain.ValueObjects;
 using BankOCR.Extensions;
@@ -23,14 +24,14 @@ namespace BankOCR.Services
             _accountPossibilitiesFinderService = accountPossibilitiesFinderService;
         }
         
-        public async Task OcrFile(string filePath)
+        public async Task ScanFile(string scanPath, string resultsPath, CancellationToken cancellationToken = default)
         {
-            var loadedScan = await _accountsFileRepository.LoadAccountsScan(filePath);
+            var loadedScan = await _accountsFileRepository.LoadAccountsScan(scanPath, cancellationToken);
             
-            var loadedScansByAccountNumber = GroupByScannedAccountNumbers(loadedScan);
-            var ocrAccounts = GetOcrAccounts(loadedScansByAccountNumber);
+            var loadedScansByAccountNumber = GroupByScannedAccountNumbers(loadedScan).ToList();
+            var ocrAccounts = GetOcrAccounts(loadedScansByAccountNumber).ToList();
 
-            await _accountsFileRepository.SaveAccountsToFile("results.txt", ocrAccounts);
+            await _accountsFileRepository.SaveAccountsToFile(resultsPath, ocrAccounts, cancellationToken);
         }
 
         private IEnumerable<OcrAccount> GetOcrAccounts(IEnumerable<string[]> loadedScansByAccountNumber)
@@ -46,9 +47,7 @@ namespace BankOCR.Services
         {
             var lines = loadedScan.SplitByNewLine();
             for (int i = 0; i < lines.Length; i += 4)
-            {
                 yield return lines.Skip(i).Take(3).ToArray();
-            }
         }
     }
 }
