@@ -3,10 +3,15 @@ using BankOCR.Exceptions;
 
 namespace BankOCR.Services
 {
-    public class AccountValidatorService
+    public interface IAccountValidatorService
     {
-        public ValidatedAccount ValidateParsedAccount(ParsedAccount parsedAccount) =>
-            new(parsedAccount, IsAccountValid(parsedAccount.Number));
+        ValidatedAccount ValidateParsedAccount(string accountNumber);
+    }
+
+    public class AccountValidatorService : IAccountValidatorService
+    {
+        public ValidatedAccount ValidateParsedAccount(string accountNumber) =>
+            new(accountNumber, IsAccountValid(accountNumber));
 
         private ParsedAccountStatus IsAccountValid(string accountNumber)
         {

@@ -14,24 +14,14 @@ namespace BankOcr.UnitTests.Services
         [TestCase("457508?00", ExpectedResult = ParsedAccountStatus.IllegalCharacter)]
         public ParsedAccountStatus ValidateParsedAccount_AccountNumber_CheckIsValid(string accountNumber)
         {
-            var digitalNumber = DigitalNumber.Create(" _ \r\n" +
-                                                     "| |\r\n" +
-                                                     "|_|");
-            var parsedAccount = ParsedAccount.Create(digitalNumber, accountNumber);
-            
-            return Sut.ValidateParsedAccount(parsedAccount).AccountValidationResult;
+            return Sut.ValidateParsedAccount(accountNumber).AccountValidationResult;
         }
         
         [TestCase("01234567")]
         [TestCase("0123456789")]
         public void ValidateParsedAccount_InvalidAccountNumberLength_CheckIsValid(string accountNumber)
         {
-            var digitalNumber = DigitalNumber.Create(" _ \r\n" +
-                                                     "| |\r\n" +
-                                                     "|_|");
-            var parsedAccount = ParsedAccount.Create(digitalNumber, accountNumber);
-            
-            Action result = () => Sut.ValidateParsedAccount(parsedAccount);
+            Action result = () => Sut.ValidateParsedAccount(accountNumber);
 
             result.Should().ThrowExactly<InvalidLengthOfAccountException>();
         }

@@ -1,6 +1,4 @@
-﻿using BankOCR.Exceptions;
-
-namespace BankOCR.Domain.ValueObjects
+﻿namespace BankOCR.Domain.ValueObjects
 {
     public enum ParsedAccountStatus
     {
@@ -8,19 +6,19 @@ namespace BankOCR.Domain.ValueObjects
         ChecksumError,
         IllegalCharacter
     }
-    
+
     public class ValidatedAccount : ValueObject
     {
-        public ParsedAccount ParsedAccount { get; }
+        public string AccountNumber { get; }
         public ParsedAccountStatus AccountValidationResult { get; }
-        
-        public ValidatedAccount(ParsedAccount parsedAccount, ParsedAccountStatus accountValidationResult = ParsedAccountStatus.None)
+
+        public ValidatedAccount(string accountNumber, ParsedAccountStatus accountValidationResult = ParsedAccountStatus.None)
         {
-            ParsedAccount = parsedAccount;
+            AccountNumber = accountNumber;
             AccountValidationResult = accountValidationResult;
         }
 
-        public override string ToString() => $"{ParsedAccount.Number}{GetStatus(AccountValidationResult)}";
+        public override string ToString() => $"{AccountNumber}{GetStatus(AccountValidationResult)}";
 
         private string GetStatus(ParsedAccountStatus accountValidationResult) =>
             accountValidationResult switch

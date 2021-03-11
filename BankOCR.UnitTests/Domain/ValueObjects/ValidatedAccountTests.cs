@@ -11,11 +11,7 @@ namespace BankOcr.UnitTests.Domain.ValueObjects
         [TestCase(ParsedAccountStatus.IllegalCharacter, ExpectedResult = "123 ILL")]
         public string ToString_SimpleValues_StringCreated(ParsedAccountStatus parsedAccountStatus)
         {
-            var digitalNumber = DigitalNumber.Create(" _ \r\n" +
-                                                     "| |\r\n" +
-                                                     "|_|");
-            var parsedAccount = ParsedAccount.Create(digitalNumber, "123");
-            var validatedAccount = new ValidatedAccount(parsedAccount, parsedAccountStatus);
+            var validatedAccount = new ValidatedAccount("123", parsedAccountStatus);
 
             return validatedAccount.ToString();
         }
